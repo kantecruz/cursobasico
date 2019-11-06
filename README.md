@@ -1,5 +1,5 @@
 # cursobasico de c#
-BD
+
 USE [db_almacen]
 GO
 /****** Object:  Table [dbo].[c_typeProduct]    Script Date: 06/11/2019 01:22:18 p. m. ******/
