@@ -1,0 +1,46 @@
+﻿@model IEnumerable<Almacen.Models.product>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+   
+        <table class="table">
+            <tr>
+                <th>Nombre Producto</th>
+                <th>Precio</th>
+                <th>@Html.DisplayNameFor(model => model.flddateOn)</th>
+                <th>@Html.DisplayNameFor(model => model.fldactive)</th>
+                <th>@Html.DisplayNameFor(model => model.c_typeProduct.flddescription)</th>
+                <th></th>
+            </tr>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.fldname)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.fldprice)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.flddateOn)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.fldactive)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.c_typeProduct.flddescription)
+                    </td>
+                    <td>
+                        <a href="@Url.Content("~/Products/Edit/"+item.id_product)">Editar</a>
+                        <a href="@Url.Content("~/Products/Edit/"+item.id_product)"><i class="fa fa-2x fa fa-edit"></i></a>
+                        <a href="@Url.Content("~/Products/Delete/"+item.id_product)"><i class="fa fa-2x fa fa-trash"></i></a>
+                    </td>
+                </tr>
+            }
+
+        </table>
+   
