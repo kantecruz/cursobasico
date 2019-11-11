@@ -7,20 +7,34 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using Almacen.Models;
-
+using PagedList;
 //este controlador es para los productos
 
 namespace Almacen.Controllers
+
 {
     public class ProductsController : Controller
     {
         private db_almacenEntities db = new db_almacenEntities();
 
         // GET: Products
-        public ActionResult Index()
+
+        public ActionResult Index(int? page, string searchString = "")
         {
-            var product = db.product.Include(p => p.c_typeProduct);
-            return View(product.ToList());
+            ViewBag.CurrentFilter = searchString;
+
+            var products = from s in db.product.Include(p => p.c_typeProduct) select s;
+
+            if (!String.IsNullOrEmpty(searchString.ToString()))
+                products = (products.Where(s => s.fldname.Contains(searchString.ToUpper())));
+
+            int pageSize = 2;
+            int pageNumber = (page ?? 1);
+
+            if (Request.IsAjaxRequest())
+                return PartialView("_ListProducts", products.OrderByDescending(m => m.id_product).ToPagedList(pageNumber, pageSize));
+
+            return View(products.OrderByDescending(m => m.id_product).ToPagedList(pageNumber, pageSize));
         }
 
         // GET: Products/Details/5

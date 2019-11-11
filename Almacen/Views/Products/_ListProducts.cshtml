@@ -1,0 +1,67 @@
+﻿
+@model IEnumerable<Almacen.Models.product>
+@using PagedList.Mvc;
+@using PagedList;
+
+<div id="ListProducts">
+    <div class="editable-table table table-striped table-responsive">        
+        <table class="lista-tabla table table-striped table-bordered table-hover" id="lista-tabla">
+            <tr>
+                <th>Nombre Producto</th>
+                <th>Precio</th>
+                <th>@Html.DisplayNameFor(model => model.flddateOn)</th>
+                <th>@Html.DisplayNameFor(model => model.fldactive)</th>
+                <th>@Html.DisplayNameFor(model => model.c_typeProduct.flddescription)</th>
+                <th></th>
+            </tr>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.fldname)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.fldprice)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.flddateOn)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.fldactive)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.c_typeProduct.flddescription)
+                    </td>
+                    <td>
+                        <a href="@Url.Content("~/Products/Edit/"+item.id_product)">Editar</a>
+                        <a href="@Url.Content("~/Products/Edit/"+item.id_product)"><i class="fa fa-2x fa fa-edit"></i></a>
+                        <a href="@Url.Content("~/Products/Delete/"+item.id_product)"><i class="fa fa-2x fa fa-trash"></i></a>
+                    </td>
+                </tr>
+            }
+
+        </table>
+    </div>
+    @Html.PagedListPager((IPagedList)Model, page => Url.Action("Index",
+    new
+    {
+        page = page,
+        searchString = @ViewBag.CurrentFilter
+    }),
+    PagedListRenderOptions.EnableUnobtrusiveAjaxReplacing(
+    new PagedListRenderOptions
+    {
+        LinkToFirstPageFormat = String.Format("Primero"),
+        LinkToPreviousPageFormat = String.Format("<< Anterior"),
+        LinkToNextPageFormat = String.Format("Siguiente >>"),
+        LinkToLastPageFormat = String.Format("Último"),
+        MaximumPageNumbersToDisplay = 5,
+        DisplayEllipsesWhenNotShowingAllPageNumbers = false
+    },
+    new AjaxOptions()
+    {
+        HttpMethod = "GET",
+        UpdateTargetId = "ListProducts"
+    }))
+</div>
