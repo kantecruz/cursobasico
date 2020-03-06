@@ -1,5 +1,5 @@
 # cursobasico de c#
-
+```
 USE [db_almacen]
 GO
 /****** Object:  Table [dbo].[c_typeProduct]    Script Date: 06/11/2019 01:22:18 p. m. ******/
@@ -41,3 +41,4 @@ REFERENCES [dbo].[c_typeProduct] ([id_typeProduct])
 GO
 ALTER TABLE [dbo].[product] CHECK CONSTRAINT [FK_product_c_typeProduct]
 GO
+```
